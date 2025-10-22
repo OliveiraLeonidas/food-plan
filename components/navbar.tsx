@@ -6,14 +6,15 @@ import { LogOut } from "lucide-react";
 
 export default function Navbar() {
   const { isLoaded, user, isSignedIn } = useUser();
+  console.log("username", user?.username);
 
   if (!isLoaded) {
     return <header className="h-20 w-full bg-white"></header>;
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
-      <div className="container mx-auto flex h-20 items-center justify-between p-4">
+    <nav className="sticky px-8 top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-sm">
+      <div className="flex h-20 items-center justify-between p-4">
         <div className="flex items-center gap-8">
           <Link
             href="/"

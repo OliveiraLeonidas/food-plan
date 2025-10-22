@@ -3,10 +3,10 @@ import { UserPlus, Settings, FileText } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="bg-white text-slate-800">
+    <main className="bg-white text-slate-800 w-full">
       {/* TODO: convert to atomic components */}
-      <section className="flex min-h-[calc(100vh-80px)] items-center justify-center bg-emerald-100/50">
-        <div className="container  mx-auto px-6 py-24 text-center">
+      <section className="mt-8 flex min-h-[calc(100vh-80px)] items-center justify-center bg-emerald-100/50">
+        <div className="mx-auto px-6 py-24 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-7xl">
             Planos Personalizados com{" "}
             <span className="bg-gradient-to-r from-emerald-500 to-teal-400 bg-clip-text text-transparent">
