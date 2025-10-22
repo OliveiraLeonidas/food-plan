@@ -3,6 +3,7 @@ import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import QueryProvider from "@/components/react-query-client-provider";
 
 const robototSans = Roboto({
   variable: "--font-roboto-sans",
@@ -26,14 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="pt-bt">
-        <body
-          className={`${robototSans.variable} ${robototMono.variable} antialiased bg-white text-slate-800 font-mono`}
-        >
-          <Navbar />
-          {children}
-        </body>
-      </html>
+      <QueryProvider>
+        <html lang="pt-bt">
+          <body
+            className={`${robototSans.variable} ${robototMono.variable} antialiased bg-white text-slate-950 font-mono`}
+          >
+            <Navbar />
+            <div className="max-w-7xl mx-auto">{children}</div>
+          </body>
+        </html>
+      </QueryProvider>
     </ClerkProvider>
   );
 }
