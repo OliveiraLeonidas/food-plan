@@ -6,7 +6,7 @@ import { LogOut } from "lucide-react";
 
 export default function Navbar() {
   const { isLoaded, user, isSignedIn } = useUser();
-  console.log("username", user?.username);
+  console.log("username", user?.fullName);
 
   if (!isLoaded) {
     return <header className="h-20 w-full bg-white"></header>;

@@ -51,3 +51,23 @@ export const availablePlans: Plan[] = [
     ],
   },
 ];
+
+export const mapIntervalToUSA = (planTypeBr: string) => {
+  switch (planTypeBr) {
+    case "semanal":
+      return "week";
+    case "mensal":
+      return "month";
+    case "anual":
+      return "year";
+    default:
+      break;
+  }
+};
+
+const priceIDMap: Record<string, string> = {
+  week: process.env.STRIPE_PRICE_WEEKLY!,
+  month: process.env.STRIPE_PRICE_MONTHLY!,
+  year: process.env.STRIPE_PRICE_YEARLY!,
+};
+export const getPriceIDFromType = (planType: string) => priceIDMap[planType];
