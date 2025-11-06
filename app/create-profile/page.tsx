@@ -18,13 +18,16 @@ async function CreateProfileRequest() {
   });
 
   const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || "Falha ao criar perfil");
+  }
   return data as ApiResponse;
 }
 
 export default function CreateProfile() {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useUser();
-  const { mutate, isPending } = useMutation<ApiResponse, Error>({
+  const { mutate, isIdle } = useMutation<ApiResponse, Error>({
     mutationFn: CreateProfileRequest,
     onSuccess: (data) => {
       console.log(data);
@@ -36,9 +39,9 @@ export default function CreateProfile() {
   });
 
   useEffect(() => {
-    if (isLoaded && isSignedIn && !isPending) {
+    if (isLoaded && isSignedIn && isIdle) {
       mutate();
     }
-  }, [isLoaded, isPending, isSignedIn, mutate]);
+  }, [isLoaded, isIdle, isSignedIn, mutate]);
   return <div>Processing sign in ...</div>;
 }

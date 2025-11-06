@@ -13,6 +13,7 @@ export async function POST() {
     }
 
     const email = clerkuser?.emailAddresses[0].emailAddress || "";
+
     if (!email) {
       return NextResponse.json(
         { error: "User does not have an email address" },
@@ -24,8 +25,11 @@ export async function POST() {
       where: { userId: clerkuser.id },
     });
 
-    if (!existingProfile) {
-      return NextResponse.json({ message: "Profile already exists" });
+    if (existingProfile) {
+      return NextResponse.json(
+        { message: "Profile already exists" },
+        { status: 200 }
+      );
     }
 
     await prisma.profile.create({

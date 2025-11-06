@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
 import { CheckIcon, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type subscribeResponse = {
   url: string;
@@ -30,6 +31,8 @@ const subscribeToPlan = async (
     }),
   });
 
+  console.log(planType, userID, email);
+
   if (!response.ok) {
     const data: subscribeError = await response.json();
     throw new Error(data.error || "Something went wrong.");
@@ -50,7 +53,8 @@ export default function Subscribe() {
   const { mutate, isPending, variables } = useMutation<
     subscribeResponse,
     Error,
-    { planType: string }
+    { planType: string },
+    { toastId: string | number }
   >({
     mutationFn: async ({ planType }) => {
       if (!userId) {
@@ -59,11 +63,22 @@ export default function Subscribe() {
       console.info("mutation return", planType, userId, email);
       return subscribeToPlan(planType, userId, email);
     },
-    onSuccess: (data) => {
+    onMutate: () => {
+      const toastId = toast.loading("Processando sua inscrição...");
+
+      return { toastId };
+    },
+    onSuccess: (data, variables, context) => {
+      toast.success("Será redirecionado para checkout...", {
+        id: context?.toastId,
+      });
       window.location.href = data.url;
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error, variables, context) => {
+      toast.error("Algo deu erro!", {
+        id: context?.toastId,
+      });
+      console.error(error);
     },
   });
 
